@@ -32,8 +32,8 @@ Article.prototype.toHtml = function () {
 
 // REVIEW: This function will take the rawData, however it is provided, and use it to instantiate all the articles. This code is moved from elsewhere, and encapsulated in a simply-named function for clarity.
 
-// COMMENT: Where is this function called? What does 'rawData' represent now? How is this different from previous labs?
-// PUT YOUR RESPONSE HERE
+// DONE COMMENT: Where is this function called? What does 'rawData' represent now? How is this different from previous labs?
+// The function is called within the Article.fetchAll function nested within the if and else statements; rawData now represents anything in localStorage. This is different from the previous lab in that we're using the getJSON call the data instead of having it in a local file. 
 Article.loadAll = articleData => {
   articleData.sort((a, b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
@@ -57,10 +57,9 @@ Article.fetchAll = () => {
     //this is where the ajax call will go
     $.getJSON('./data/hackerIpsum.json')
       .then(data => {
-        console.log('in')
         Article.loadAll(data)
         articleView.initIndexPage();
-        console.log(Article.all)
+        //we had to getJSON first to retrieve the data from the hackerIpsum.json file; next the .then method is used to render the data onto the site; the .catch method returns an error if the data didn't load. 
 
       })
       .catch(err => console.error('DERRRP', err));
