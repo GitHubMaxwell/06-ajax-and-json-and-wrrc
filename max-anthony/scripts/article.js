@@ -44,25 +44,29 @@ Article.loadAll = articleData => {
 console.log('B4444444 FEEETTTCCCHHHHHH');
 
 Article.fetchAll = () => {
-  // REVIEW: What is this 'if' statement checking for? Where was the rawData set to local storage?
-  // let url = '/data/hackerIpsum.json';
+  // DONE REVIEW: What is this 'if' statement checking for? Where was the rawData set to local storage?
+  // this if is checking if theres rawdata in localStorage
+
+
+  //let url = '/data/hackerIpsum.json';
   // console.log(url);
 
   if (localStorage.rawData) {
-    console.log('localStorage');
-    Article.loadAll();
-
+    // console.log('localStorage');
+    // Article.loadAll();
+    Article.loadAll(JSON.parse(localStorage.rawData));
+    articleView.initIndexPage();
   } else {
-    console.log('EEEEELLLLLLLSSSSSSEEEEEEE');
+    // console.log('EEEEELLLLLLLSSSSSSEEEEEEE');
     //this is where the ajax call will go
     $.getJSON('./data/hackerIpsum.json')
       .then(data => {
         Article.loadAll(data)
         articleView.initIndexPage();
         //we had to getJSON first to retrieve the data from the hackerIpsum.json file; next the .then method is used to render the data onto the site; the .catch method returns an error if the data didn't load. 
-
-      })
-      .catch(err => console.error('DERRRP', err));
+      }, err => {
+        console.error(err);
+      });
 
   }
 }
